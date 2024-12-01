@@ -7,5 +7,3 @@ node_modules/
 # 이미지 폴더
 public/images/
 
-# 모델 파일이 들어 있는 디렉토리
-public/models/
