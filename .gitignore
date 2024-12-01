@@ -1,0 +1,11 @@
+# 환경 변수 파일
+.env
+
+# 노드 모듈 디렉토리
+node_modules/
+
+# 이미지 폴더
+public/images/
+
+# 모델 파일이 들어 있는 디렉토리
+public/models/

@@ -1,0 +1,861 @@
+@import url('./reset.css');
+
+body, html, main, #root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body.pointer{
+  cursor: pointer;
+}
+
+body.drag{
+  cursor: grab;
+}
+
+/*.h1{
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}*/
+
+.cityName{
+  border-radius: 12px;
+  padding: 5px 20px;
+  background: rgb(0, 0, 0, 0.3);
+  color: white;
+  white-space: nowrap;
+  font-size: 22px;
+}
+
+.VillagecityName{
+  border-radius: 12px;
+  padding: 5px 24px;
+  background: rgba(255, 255, 255, 0.811);
+  color: rgb(0, 0, 0);
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.cityName::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10.5px solid transparent;
+  border-top-color: rgb(0, 0, 0, 0.3);
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -20px;
+  margin-bottom: -10px;
+}
+
+.VillagecityName::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10.5px solid transparent;
+  border-top-color: rgb(0, 0, 0, 0.3);
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -20px;
+  margin-bottom: -10px;
+}
+
+.layout-detail{
+  width:  100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  display: flex;
+}
+
+.left{
+  width: 50%;
+  height: 100%;
+  clip-path: circle(61.4% at 0 51%);
+}
+
+.left>img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right{
+  clip-path: circle(61.4% at 98% 50%);
+  backdrop-filter: blur(15px);
+  background: #000c7b84;
+  -webkit-backdrop-filter: blur(15px);
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right .container{
+  padding: 10rem 2rem 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.x-btn{
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  padding: 10px;
+  background: #ffffff8d;  
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.x-btn::after{
+  content: '';
+  background: url('/public/icons/x-btn.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  display: block;
+  background-color: transparent;
+}
+
+.airplane-btn{
+  content: '';
+  background: url('/public/icons/airplane-svgrepo-com (1).svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  display: block;
+  background-color: white;
+}
+
+.temp{
+  background: url('/public/icons/thermometer.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+.wind{
+  background: url('/public/icons/wind.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+.humidity{
+  background: url('/public/icons/raindrop-drop-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+.rain{
+  background: url('/public/icons/rain-umbrella-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+.snow{
+  background: url('/public/icons/snowflake-snow-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+.face-container {
+  display: flex; /* 자식 요소를 수평으로 정렬하기 위해 flex 사용 */
+  justify-content: left; /* 자식 요소를 수평으로 가운데 정렬 */
+  align-items: center; /* 자식 요소를 수직으로 가운데 정렬 */
+}
+
+.face-container .h2{
+  display: block;
+  font-size: max(1.4583vw, 28px);
+  color: #000000;
+  font-weight: 500;
+  line-height: 135%;
+  margin-left: 5px;
+}
+
+.face-container .smile{
+  background: url('/public/icons/face-smile-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.face-container .frown{
+  background: url('/public/icons/face-frown-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+h1{
+  font-size: max(1.6667vw, 32px);
+  color: #fff;
+  font-weight: 500;
+  line-height: 135%;
+  letter-spacing: 0.05em;
+}
+
+h2{
+  display: block;
+  margin-top: 0.5rem;
+  font-size: max(1.4583vw, 28px);
+  color: #fff;
+  font-weight: 500;
+  line-height: 135%;
+}
+
+.texts{
+  margin-top: 1.2rem;
+}
+
+.texts p{
+  line-height: 135%;
+  color: #fff;
+  font-size: 22px;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*background-color: rgba(255, 255, 255, 0.5); 검색시 흰색의 반투명*/
+}
+
+
+/*즐겨찾기 페이지*/
+.bookmark-content {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(30, 10, 85, 0.438);
+}
+
+
+.search-container {
+  height: 61.5vh;
+  position: fixed;
+  left: 14.8%;
+  width: 40%;
+  border-radius: 4px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 0.5rem;
+  width: 40%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+.search-btn {
+  /*검색 search btn*/
+  position: fixed;
+  width: 55px; /* 아이콘 너비에 맞게 조정 */
+  height: 33px; /* 아이콘 높이에 맞게 조정 */
+  left: 32%;
+  border: none; /* 버튼 테두리 제거 */
+  cursor: pointer; /* 커서를 포인터로 변경하여 사용자에게 버튼임을 나타냄 */
+  color: #fff;
+  background-color: #0085f9;
+}
+
+.related-cities {
+  position: absolute;
+  top: 70;
+  left: 10;
+  width: 42%;
+  background-color: #ffffffb9;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.related-cities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.related-cities li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.related-cities li:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #d8d8d8f6; /* 선택된 항목의 배경색 */
+  color: #333; /* 선택된 항목의 글자색 */
+}
+
+.bookmark-icon {
+  float: right; /* 오른쪽으로 정렬 */
+}
+
+.search-bookmark-container {
+  display: flex;
+  align-items: center;
+}
+
+.bookmark-container {
+  width: 200px; /* 즐겨찾기 목록의 너비 조절 */
+}
+
+/*searchname은 위성에 마우스 댈시 나타나는 문구*/
+.searchName{
+  border-radius: 12px;
+  padding: 5px 20px;
+  background: rgba(0, 221, 221, 0.667);
+  color: white;
+  white-space: nowrap;
+  font-size: 22px;
+  z-index: 0;
+}
+
+.searchName::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10.5px solid transparent;
+  border-top-color: rgb(0, 0, 0, 0.3);
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -20px;
+  margin-bottom: -10px;
+  z-index: 0;
+}
+
+.BookmarkName{
+  border-radius: 12px;
+  padding: 5px 20px;
+  background: rgb(0, 0, 0, 0.3);
+  color: white;
+  white-space: nowrap;
+  font-size: 22px;
+}
+
+.BookmarkName::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10.5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.3);
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -20px;
+  margin-bottom: -10px;
+}
+
+.Landmark-container {
+  position: fixed;
+  width: 55vw;
+  height: 90vh;
+  padding: 20px;
+  border-radius: 20px;
+  position: fixed; /* 화면에 고정 */
+  right: 5%;
+  left: 0; /* 화면의 오른쪽에 정렬 */
+  transform: translate(-15%, -50%); /* 화면의 세로 중간 정렬을 위한 변환 */
+  background-color: rgba(211, 211, 211, 0.637);
+  z-index: 1;
+}
+
+.Landmark-container-images {
+  display: flex;
+  align-items: center; /* 이미지와 텍스트를 수직으로 정렬 */
+  gap: 20px; /* 이미지와 텍스트 사이의 간격 설정 */
+}
+
+.Landmark-container-images p{
+  line-height: 135%;
+  color: rgba(27, 27, 27, 0.87);
+  font-size: 22px;
+}
+
+.smileIn {
+  position: relative;
+  top: -140px;
+  right: 10px;
+  border-radius: 12px;
+  padding: 10px;
+  width: 390px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.15);
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  word-wrap: break-word; /* 긴 단어를 적절히 줄 바꿈 */
+  z-index: 2;
+}
+
+.vbackbtn{
+  border-radius: 12px;
+  padding: 5px 20px;
+  background: rgba(106, 106, 106, 0.667);
+  color: white;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+.alert-box{
+  background: rgba(255, 255, 255, 0.747);
+  padding: 35px;
+  border-radius: 10px;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  animation: blink01 1s infinite;
+}
+
+.blink01 {
+  animation: blink01-animation 1s linear;
+}
+
+@keyframes blink01-animation {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.close-btn {
+  position: absolute;
+  top: 3px; /* 메시지로부터의 거리 조정 */
+  right: 2px; /* 메시지로부터의 거리 조정 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgb(0, 0, 0); /* 닫기 버튼의 색상 지정 */
+}
+
+.close-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  background-color: #258eff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #0056b3;
+}
+
+/*모달 관련*/
+.modal-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100px;
+  height: 115px; 
+  background-color: rgba(255, 255, 255, 0); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  max-width: 1000px; 
+  min-height: 90px; 
+}
+
+/*맨뒤 하얀네모모달*/
+.modal {
+  background: linear-gradient(to bottom, #1e4d7cd4, #a7c1dcc1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  height: 580px; 
+  min-height: 300px;
+}
+
+/*모달 버튼 3개*/
+.fxbtn {
+  position: absolute; 
+  left: 180px; 
+  bottom: 335px; 
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  border: 1.5px solid black;
+  color: rgb(0, 0, 0); 
+}
+.fbeforebtn{
+  position: absolute; 
+  left: -100px; 
+  bottom: -250px;  
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin-right: 35px; 
+  margin-top: 10px;
+  margin-bottom: 10px; 
+}
+.fnextbtn{
+  position: absolute;
+  writing-mode: horizontal-tb;
+  white-space: nowrap; 
+  left: 155px; 
+  bottom: -250px; 
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  color: rgb(0, 0, 0); 
+  margin-bottom: 10px; 
+  margin-top: 10px;
+}
+.fh2{
+  color: rgb(255, 255, 255);
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/*fweather모달*/
+.modal-item {
+  cursor: pointer;
+  width: 280px; 
+  height: 30px; 
+  margin-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* fadditionalmodal 모달이 화면 밖에서 시작하도록 설정 */
+.additional-modal {
+  position: absolute;
+  top: -210px;
+  right: -900px; 
+  background: linear-gradient(to bottom, #6585a5d4, #bcd2ebc1); /* 위에서 아래로 그라데이션 */
+  width: 350px;
+  height: 100%;
+  transition: right 0.5s ease-in-out; 
+  min-height: 470px;
+  border-radius: 5px;
+}
+
+.plus-modal {
+  position: absolute;
+  top: 0px;
+  right: 780px; 
+  background: white;
+  width: 550px;
+  height: 100%;
+  transition: right 0.5s ease-in-out; 
+  min-height: 500px;
+  border-radius: 5px;
+}
+.pxbtn {
+  position: absolute; 
+  left: 500px; 
+  bottom: 10px; 
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  border: 1.5px solid black;
+  color: rgb(0, 0, 0); 
+}
+.pbeforebtn{
+  position: absolute; 
+  left: 160px; 
+  bottom: 10px;  
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin-right: 35px; 
+  margin-top: 10px;
+  margin-bottom: 2px; 
+}
+.pnextbtn{
+  position: absolute;
+  writing-mode: horizontal-tb;
+  white-space: nowrap; 
+  left: 350px; 
+  bottom: 10px; 
+  background: rgba(255, 255, 255, 0.841); 
+  font-size: 14px;
+  color: rgb(0, 0, 0); 
+  margin-bottom: 2px;  
+  margin-top: 10px;
+}
+
+/* 추가적인 CSS 스타일 */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* 아이콘 위에 툴팁을 배치 */
+  left: 10px;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 15px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* 깜빡거리는 애니메이션 */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.blink {
+  animation: blink 0.3s ease-in-out 2; /* 3회 깜빡거림 */
+}
+
+
+.fadd{
+  margin-bottom: 10px;
+  margin-left: 10px;;
+}
+.fadd-xbtn{
+  position: absolute;
+  color: #333;
+  background:#ffffffe7;
+  right: 10px;
+  top: 10px;
+  border-radius: 20px;
+}
+.fadd p {
+  margin-bottom: 7px; /* 각 p 요소의 아래쪽에 여백 추가 */
+}
+.fadd h2{
+  color: #ffffff;
+  font-size: x-large;
+}
+.bold-text {
+  font-weight: bold;
+}
+
+.back-button {
+  position: absolute;
+  bottom: 40px;
+  right: 30px;
+  padding: 5px 10px;
+  background-color: #258eff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.face-container02 {
+  display: flex; /* 자식 요소를 수평으로 정렬하기 위해 flex 사용 */
+  justify-content: left; /* 자식 요소를 수평으로 가운데 정렬 */
+  align-items: center; /* 자식 요소를 수직으로 가운데 정렬 */
+}
+.face-container02 .h2 {
+  margin-left: 10px;
+  font-size: 23px;
+}
+.fcontent{
+  font-size: 20px;
+  margin-bottom: 7px;
+}
+.face-container02 .hot  {
+  background: url('/public/sface/face-hot.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .sohot  {
+  background: url('/public/sface/face-sohot.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .veryhot  {
+  background: url('/public/sface/face-veryhot.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .sunsun  {
+  background: url('/public/sface/face-sunsun.png') 50% 50% no-repeat;
+  background-size: contain; 
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .good  {
+  background: url('/public/sface/face-good.png') 50% 50% no-repeat ;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .verygood  {
+  background: url('/public/sface/face-verygood.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .cold  {
+  background: url('/public/sface/face-cold.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container02 .felse {
+  background: url('/public/sface/face-else.png') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.face-container03 {
+  display: flex;
+  justify-content: left; 
+  align-items: center; 
+  margin-top: -12px;
+}
+.face-container03 .h2 {
+  margin-left: 10px;
+  font-size: 23px;
+}
+.face-container03 .happy {
+  background: url('/public/sface/good-two-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.face-container03 .sad {
+  background: url('/public/sface/bad-two-svgrepo-com.svg') 50% 50% no-repeat;
+  background-size: contain;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.landmarkmodal-overlay {
+  position: fixed;
+  top: -700px;
+  right: 2230px;
+  width: 50%;
+  height: 50%;
+  background-color: rgba(0, 0, 0, 0.5); /* 투명한 검은색 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landmarkmodal {
+  background-color: white;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.landmarkmodal img {
+  width: 780px;
+  height: auto; /* 이미지의 높이를 자동으로 조절하여 비율 유지 */
+}
+
+.landmarkmodal .x-button {
+  position: absolute;
+  bottom: 165px;
+  right: -385px;
+}
+
+
+.avgName{
+  border-radius: 12px;
+  padding: 10px 20px;
+  background: rgb(0, 0, 0, 0.3);
+  color: white;
+  white-space: nowrap;
+  font-size: 22px;
+}
+
+.avgName::after {
+  content: '';
+  position: absolute;
+  top: 0; /* 삼각형을 상단에 위치시킵니다 */
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10.5px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.3); /* 삼각형의 색상을 하단 테두리로 설정 */
+  border-top: 0; /* 상단 테두리를 0으로 설정 */
+  border-left: 0; /* 왼쪽 테두리를 0으로 설정 */
+  margin-left: -10.5px; /* 중앙 정렬을 위해 변경 */
+  margin-top: -10.5px; /* 부모 요소와 더 가깝게 위치시키기 위해 변경 */
+}
